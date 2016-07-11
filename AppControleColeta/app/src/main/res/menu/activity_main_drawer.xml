@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_principal"
+                        android:title="@string/navigation_drawer_home" />
+        <item
+            android:id="@+id/nav_produto"
+            android:title="@string/navigation_drawer_produto" />
+        <item
+            android:id="@+id/nav_cliente"
+
+            android:title="@string/navigation_drawer_cliente" />
+    </group>
+</menu>
