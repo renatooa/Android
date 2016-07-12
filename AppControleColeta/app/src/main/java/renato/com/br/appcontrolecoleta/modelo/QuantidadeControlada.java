@@ -3,10 +3,13 @@ package renato.com.br.appcontrolecoleta.modelo;
 import java.io.Serializable;
 import java.util.Date;
 
+import br.com.space.api.spa.model.dao.db.Table;
+import br.com.space.api.spa.model.domain.IPersistent;
+
 /**
  * Created by Renato on 13/06/2016.
  */
-public class QuantidadeControlada implements Serializable {
+public class QuantidadeControlada implements Serializable , IPersistent {
 
     private Produto produto = null;
 
@@ -16,7 +19,13 @@ public class QuantidadeControlada implements Serializable {
 
     private Date date = null;
 
-    public QuantidadeControlada(Produto produto, Pessoa pessoa, double quantidade) {
+    private Date dateDevolucao = null;
+
+    public QuantidadeControlada(){
+
+    }
+
+    public QuantidadeControlada(Produto produto, Pessoa pessoa, double quantidade, Date dateDevolucao) {
         this.produto = produto;
         this.pessoa = pessoa;
         this.quantidade = quantidade;
@@ -53,5 +62,32 @@ public class QuantidadeControlada implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Date getDateDevolucao() {
+        return dateDevolucao;
+    }
+
+    public void setDateDevolucao(Date dateDevolucao) {
+        this.dateDevolucao = dateDevolucao;
+    }
+
+    public static boolean salvar(QuantidadeControlada quantidadeControlada){
+        return true;
+    }
+
+    @Override
+    public Table getTable() {
+        return null;
+    }
+
+    @Override
+    public void setTable(Table table) {
+
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

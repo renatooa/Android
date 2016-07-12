@@ -4,12 +4,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.space.api.spa.annotations.SpaceColumn;
+import br.com.space.api.spa.annotations.SpaceId;
+import br.com.space.api.spa.annotations.SpaceTable;
+import br.com.space.api.spa.model.dao.db.Table;
+import br.com.space.api.spa.model.domain.IPersistent;
+
 /**
  * Created by Renato on 13/06/2016.
  */
-public class Produto implements Serializable {
+@SpaceTable(name = "produto")
+public class Produto implements Serializable , IPersistent {
 
+
+    @SpaceId
+    @SpaceColumn(name = "codigo")
     private int codigo = 0;
+
+    @SpaceColumn(name = "nome")
     private String nome;
 
     public Produto(int codigo, String nome) {
@@ -47,5 +59,20 @@ public class Produto implements Serializable {
     @Override
     public String toString() {
         return nome;
+    }
+
+    @Override
+    public Table getTable() {
+        return null;
+    }
+
+    @Override
+    public void setTable(Table table) {
+
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

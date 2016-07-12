@@ -34,4 +34,16 @@
         android:ems="10"
         android:inputType="numberDecimal" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/texto_data_devolucao"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <DatePicker
+        android:id="@+id/coleta_dt_devolucao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></DatePicker>
+
+
 </LinearLayout>

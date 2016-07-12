@@ -1,5 +1,6 @@
 package renato.com.br.appcontrolecoleta;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import renato.com.br.appcontrolecoleta.adapter.AdapterPessoa;
+import renato.com.br.appcontrolecoleta.dao.BD;
 import renato.com.br.appcontrolecoleta.modelo.Pessoa;
 import renato.com.br.appcontrolecoleta.modelo.Produto;
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ListView.OnItemClickListener {
 
     public final static String PARAM_PESSOA = "PESSOA";
+    public static Context context = null;
 
 
     private ListView listView = null;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,6 +67,8 @@ public class MainActivity extends AppCompatActivity
         List<Pessoa> pessoas = Pessoa.recuperarTodas();
 
         listView.setAdapter(new AdapterPessoa(this, pessoas));
+
+        BD.getDao();
     }
 
     @Override

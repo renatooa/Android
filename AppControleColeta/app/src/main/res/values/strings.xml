@@ -11,14 +11,17 @@
     <string name="navigation_drawer_produto">Produto</string>
 
     <string name="action_settings">Settings</string>
+    <string name="action_salvar">Salvar</string>
 
     <string name="titulo.dialogo">Escolha</string>
     <string name="titulo.atencao">Atenção</string>
+    <string name="titulo.emprestimo">Empréstimo</string>
 
     <string name="texto.sim">Sim</string>
     <string name="texto.nao">Não</string>
 
     <string name="texto.quantidade">Quantidade</string>
     <string name="texto.produto">Produto</string>
+    <string name="texto_data_devolucao">Data Devolução</string>
 
 </resources>
