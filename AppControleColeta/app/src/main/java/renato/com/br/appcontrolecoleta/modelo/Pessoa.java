@@ -9,6 +9,8 @@ import br.com.space.api.spa.annotations.SpaceId;
 import br.com.space.api.spa.annotations.SpaceTable;
 import br.com.space.api.spa.model.dao.db.Table;
 import br.com.space.api.spa.model.domain.IPersistent;
+import renato.com.br.appcontrolecoleta.dao.BD;
+import renato.com.br.appcontrolecoleta.util.ID;
 
 /**
  * Created by Renato on 13/06/2016.
@@ -25,15 +27,17 @@ public class Pessoa implements Serializable, IPersistent {
     private String endereco;
 
     public Pessoa() {
+        codigo = ID.getId();
     }
 
-    public Pessoa(int codigo, String nome, String endereco) {
-        this.codigo = codigo;
+    public Pessoa(String nome, String endereco) {
+        this();
         this.nome = nome;
         this.endereco = endereco;
     }
 
     public Pessoa(int codigo, String nome) {
+
         this.codigo = codigo;
         this.nome = nome;
     }
@@ -64,13 +68,15 @@ public class Pessoa implements Serializable, IPersistent {
 
     public static List<Pessoa> recuperarTodas() {
 
-        List<Pessoa> pessoas = new ArrayList<>();
+        /*List<Pessoa> pessoas = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
-            pessoas.add(new Pessoa(i, "Pessoa " + i, "Rua " + i));
+            pessoas.add(new Pessoa("Pessoa " + i, "Rua " + i));
         }
 
-        return pessoas;
+        return pessoas;*/
+
+        return  BD.getDao().list(Pessoa.class);
     }
 
     @Override
@@ -90,5 +96,9 @@ public class Pessoa implements Serializable, IPersistent {
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    public boolean salvar() {
+        return BD.getDao().insert(this) > 0;
     }
 }

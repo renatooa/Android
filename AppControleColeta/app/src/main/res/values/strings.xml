@@ -17,11 +17,22 @@
     <string name="titulo.atencao">Atenção</string>
     <string name="titulo.emprestimo">Empréstimo</string>
 
+    <string name="texto.nome">Nome</string>
+
+    <string name="texto.logradouro">Logradouro</string>
+    <string name="texto.bairro">Bairro</string>
+    <string name="texto.cidade">Cidade</string>
+    <string name="texto.estado">Estado</string>
+
     <string name="texto.sim">Sim</string>
     <string name="texto.nao">Não</string>
 
     <string name="texto.quantidade">Quantidade</string>
     <string name="texto.produto">Produto</string>
     <string name="texto_data_devolucao">Data Devolução</string>
+
+    <string name="mensagem_gravado_sucesso">Gravado com sucesso</string>
+    <string name="alerta_falha_gravacao">Falha na Gravacao</string>
+    <string name="title_activity_pessoa_cadastro">PessoaCadastro</string>
 
 </resources>

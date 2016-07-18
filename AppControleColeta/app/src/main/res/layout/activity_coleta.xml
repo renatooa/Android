@@ -43,7 +43,7 @@
     <DatePicker
         android:id="@+id/coleta_dt_devolucao"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></DatePicker>
+        android:layout_height="wrap_content"/>
 
 
 </LinearLayout>

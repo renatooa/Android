@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="renato.com.br.appcontrolecoleta.PessoaCadastro">
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/texto.nome"/>
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/cad_pessoa_nome" />
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/texto.logradouro"/>
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/cad_pessoa_Logradouro" />
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/texto.bairro"/>
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/cad_pessoa_bairro" />
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/texto.cidade"/>
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/cad_pessoa_cidade" />
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/texto.estado"/>
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/cad_pessoa_estado" />
+
+</LinearLayout>

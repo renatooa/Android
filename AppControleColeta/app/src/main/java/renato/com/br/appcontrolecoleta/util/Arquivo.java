@@ -12,7 +12,14 @@ public class Arquivo {
     public static final File PASTA_RAIZ = new File(getDiretorioExterno(),
             "coleta");
 
+    public static File getPastaRaiz() {
+        File raizApp = PASTA_RAIZ;
 
+        if (!raizApp.exists()) {
+            raizApp.mkdirs();
+        }
+        return raizApp;
+    }
 
 
     public static File getDiretorioExterno() {
@@ -25,8 +32,6 @@ public class Arquivo {
         }
         return dir;
     }
-
-
 
 
 }

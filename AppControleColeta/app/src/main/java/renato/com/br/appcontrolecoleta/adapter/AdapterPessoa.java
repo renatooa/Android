@@ -17,7 +17,6 @@ import renato.com.br.appcontrolecoleta.util.Fabrica;
  */
 public class AdapterPessoa extends ArrayAdapter<Pessoa> {
 
-
     public AdapterPessoa(Context context, List<Pessoa> pessoas) {
         super(context, R.layout.adp_list_pessoa, pessoas);
     }

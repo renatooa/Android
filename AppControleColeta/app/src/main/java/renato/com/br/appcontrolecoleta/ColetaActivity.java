@@ -60,22 +60,22 @@ public class ColetaActivity extends AppCompatActivity {
 
             QuantidadeControlada quantidadeControlada = new QuantidadeControlada(getProdutoSelecionado(), pessoa, Double.parseDouble(editQuantidade.getText().toString()), getDataDevolucao());
 
-            if (QuantidadeControlada.salvar(quantidadeControlada)){
-                Toast.makeText(this, "Salvo", Toast.LENGTH_LONG).show();
-            }else{
-                Toast.makeText(this, "Problemas ao Salvar", Toast.LENGTH_LONG).show();
+            if (quantidadeControlada.salvar()) {
+                Toast.makeText(this, getString(R.string.mensagem_gravado_sucesso), Toast.LENGTH_LONG).show();
+                finish();
+            } else {
+                Toast.makeText(this, getString(R.string.alerta_falha_gravacao), Toast.LENGTH_LONG).show();
             }
-
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private Produto getProdutoSelecionado(){
+    private Produto getProdutoSelecionado() {
         return (Produto) spinnerProduto.getSelectedItem();
     }
 
-    private Date getDataDevolucao(){
+    private Date getDataDevolucao() {
 
         Calendar calendar = Calendar.getInstance();
         calendar.clear();
@@ -84,7 +84,7 @@ public class ColetaActivity extends AppCompatActivity {
         calendar.set(Calendar.MONTH, datePicker.getMonth());
         calendar.set(Calendar.YEAR, datePicker.getYear());
 
-        return  calendar.getTime();
+        return calendar.getTime();
 
     }
 }
