@@ -7,7 +7,7 @@
     <string name="navigation_drawer_close">Fechar Menu</string>
 
     <string name="navigation_drawer_home">Principal</string>
-    <string name="navigation_drawer_cliente">Cliente</string>
+    <string name="navigation_drawer_pessoa">Pessoa</string>
     <string name="navigation_drawer_produto">Produto</string>
 
     <string name="action_settings">Settings</string>

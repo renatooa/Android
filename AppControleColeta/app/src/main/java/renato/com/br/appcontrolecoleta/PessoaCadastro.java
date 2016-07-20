@@ -7,17 +7,19 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import br.com.space.api.core.util.StringUtil;
 import renato.com.br.appcontrolecoleta.modelo.Pessoa;
 import renato.com.br.appcontrolecoleta.modelo.QuantidadeControlada;
 
 public class PessoaCadastro extends AppCompatActivity {
-
 
     private EditText editNome = null;
     private EditText editLogradouro = null;
     private EditText editBairro = null;
     private EditText editCidade = null;
     private EditText editEstado = null;
+
+    Pessoa pessoaEdicao = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,22 @@ public class PessoaCadastro extends AppCompatActivity {
         editBairro = (EditText) findViewById(R.id.cad_pessoa_bairro);
         editCidade = (EditText) findViewById(R.id.cad_pessoa_cidade);
         editEstado = (EditText) findViewById(R.id.cad_pessoa_estado);
+
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(PessoaList.PARAM_PESSOA)) {
+            pessoaEdicao = (Pessoa) getIntent().getExtras().getSerializable(PessoaList.PARAM_PESSOA);
+            popularViewsPessoaEdicao();
+        }
+    }
+
+    private void popularViewsPessoaEdicao() {
+        if (pessoaEdicao != null) {
+            editNome.setText(pessoaEdicao.getNome());
+
+            editLogradouro.setText(pessoaEdicao.getLogradouro());
+            editBairro.setText(pessoaEdicao.getBairro());
+            editCidade.setText(pessoaEdicao.getCidade());
+            editEstado.setText(pessoaEdicao.getEstado());
+        }
     }
 
     @Override
@@ -42,10 +60,15 @@ public class PessoaCadastro extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_salvar_pessoa) {
 
-            Pessoa pessoa = new Pessoa(editNome.getText().toString(), getEndereco());
-            boolean salvar = pessoa.salvar();
+            boolean edicao = pessoaEdicao != null;
 
-            if (salvar) {
+            Pessoa pessoa = edicao ? pessoaEdicao : new Pessoa();
+
+            pessoa.set(editNome.getText().toString(), editLogradouro.getText().toString(), editBairro.getText().toString(), editCidade.getText().toString(), editEstado.getText().toString());
+
+            boolean persistido = edicao ? pessoa.atualizar() : pessoa.salvar();
+
+            if (persistido) {
                 Toast.makeText(this, getString(R.string.mensagem_gravado_sucesso), Toast.LENGTH_LONG).show();
                 finish();
             } else {
@@ -56,8 +79,4 @@ public class PessoaCadastro extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private String getEndereco() {
-        return editLogradouro.getText().toString() + ", " + editBairro.getText().toString()
-                + " - " + editCidade.getText().toString() + ", " + editEstado.getText().toString();
-    }
 }

@@ -40,7 +40,7 @@ public class ColetaActivity extends AppCompatActivity {
 
         spinnerProduto.setAdapter(arrayAdapterProduto);
 
-        pessoa = (Pessoa) getIntent().getExtras().getSerializable(MainActivity.PARAM_PESSOA);
+        pessoa = (Pessoa) getIntent().getExtras().getSerializable(PessoaList.PARAM_PESSOA);
 
         setTitle(getString(R.string.titulo_emprestimo) + pessoa.getNome());
 

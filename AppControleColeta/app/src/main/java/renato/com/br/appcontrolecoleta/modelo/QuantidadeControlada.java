@@ -1,8 +1,13 @@
 package renato.com.br.appcontrolecoleta.modelo;
 
-import java.io.Serializable;
-import java.util.Date;
+import android.widget.ListView;
 
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import br.com.space.api.core.sistema.Conversao;
 import br.com.space.api.spa.annotations.SpaceColumn;
 import br.com.space.api.spa.annotations.SpaceId;
 import br.com.space.api.spa.annotations.SpaceTable;
@@ -71,6 +76,9 @@ public class QuantidadeControlada implements Serializable, IPersistent {
     }
 
     public Produto getProduto() {
+        if (produto == null) {
+            produto = Produto.recupear(produtoCodigo);
+        }
         return produto;
     }
 
@@ -80,6 +88,9 @@ public class QuantidadeControlada implements Serializable, IPersistent {
     }
 
     public Pessoa getPessoa() {
+        if (pessoa == null) {
+            pessoa = Pessoa.recupear(pessoaCodigo);
+        }
         return pessoa;
     }
 
@@ -113,6 +124,9 @@ public class QuantidadeControlada implements Serializable, IPersistent {
     }
 
     public Date getDate() {
+        if (date == null){
+            date = new Date(dateMillis);
+        }
         return date;
     }
 
@@ -129,7 +143,17 @@ public class QuantidadeControlada implements Serializable, IPersistent {
         this.dateMillis = dateMillis;
     }
 
+    public Calendar getCalendarDevolucao() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(dateDevolucaoMillis);
+
+        return calendar;
+    }
+
     public Date getDateDevolucao() {
+        if (dateDevolucao == null){
+            dateDevolucao = new Date(dateDevolucaoMillis);
+        }
         return dateDevolucao;
     }
 
@@ -146,6 +170,19 @@ public class QuantidadeControlada implements Serializable, IPersistent {
         this.dateDevolucaoMillis = dateDevolucaoMillis;
     }
 
+    public boolean isDevolucaoPrazoOK() {
+        Calendar calendarDevolucao = getCalendarDevolucao();
+        calendarDevolucao.set(Calendar.HOUR_OF_DAY, 23);
+        calendarDevolucao.set(Calendar.MINUTE, 59);
+        calendarDevolucao.set(Calendar.SECOND, 59);
+
+        return Calendar.getInstance().before(calendarDevolucao);
+    }
+
+    public boolean isDevolucaoHoje() {
+        return Conversao.formatarDataDDMMAAAA(getDateDevolucao()).equals(Conversao.formatarDataDDMMAAAA(new Date()));
+    }
+
     @Override
     public Table getTable() {
         return null;
@@ -158,6 +195,10 @@ public class QuantidadeControlada implements Serializable, IPersistent {
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    public static List<QuantidadeControlada> recuperarTodas() {
+        return BD.getDao().list(QuantidadeControlada.class);
     }
 
     public boolean salvar() {

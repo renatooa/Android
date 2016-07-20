@@ -2,6 +2,7 @@ package renato.com.br.appcontrolecoleta.modelo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import br.com.space.api.spa.annotations.SpaceColumn;
@@ -9,12 +10,14 @@ import br.com.space.api.spa.annotations.SpaceId;
 import br.com.space.api.spa.annotations.SpaceTable;
 import br.com.space.api.spa.model.dao.db.Table;
 import br.com.space.api.spa.model.domain.IPersistent;
+import renato.com.br.appcontrolecoleta.dao.BD;
+import renato.com.br.appcontrolecoleta.util.ID;
 
 /**
  * Created by Renato on 13/06/2016.
  */
 @SpaceTable(name = "produto")
-public class Produto implements Serializable , IPersistent {
+public class Produto implements Serializable, IPersistent {
 
 
     @SpaceId
@@ -24,8 +27,12 @@ public class Produto implements Serializable , IPersistent {
     @SpaceColumn(name = "nome")
     private String nome;
 
-    public Produto(int codigo, String nome) {
-        this.codigo = codigo;
+    public Produto() {
+        this.codigo = ID.getId();
+    }
+
+    public Produto(String nome) {
+        this();
         this.nome = nome;
     }
 
@@ -45,16 +52,6 @@ public class Produto implements Serializable , IPersistent {
         this.nome = nome;
     }
 
-    public static List<Produto> recuperarTodos() {
-
-        List<Produto> produtos = new ArrayList<>();
-
-        for (int i = 0; i < 100; i++) {
-            produtos.add(new Produto(i, "Produto " + i));
-        }
-
-        return produtos;
-    }
 
     @Override
     public String toString() {
@@ -68,11 +65,27 @@ public class Produto implements Serializable , IPersistent {
 
     @Override
     public void setTable(Table table) {
-
     }
 
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    public static List<Produto> recuperarTodos() {
+        return BD.getDao().list(Produto.class);
+    }
+
+    public static Produto recupear(int produtoCodigo) {
+        return BD.getDao().uniqueResult(Produto.class, "codigo = ?", new String[]{Integer.toString(produtoCodigo)});
+    }
+
+    public boolean salvar() {
+        return BD.getDao().insert(this) > 0;
+
+    }
+
+    public boolean atualizar() {
+        return BD.getDao().update(this) > 0;
     }
 }

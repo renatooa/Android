@@ -7,6 +7,7 @@ import java.util.List;
 import br.com.space.api.spa.annotations.SpaceColumn;
 import br.com.space.api.spa.annotations.SpaceId;
 import br.com.space.api.spa.annotations.SpaceTable;
+import br.com.space.api.spa.annotations.SpaceTransient;
 import br.com.space.api.spa.model.dao.db.Table;
 import br.com.space.api.spa.model.domain.IPersistent;
 import renato.com.br.appcontrolecoleta.dao.BD;
@@ -21,25 +22,45 @@ public class Pessoa implements Serializable, IPersistent {
     @SpaceId
     @SpaceColumn(name = "codigo")
     private int codigo = 0;
+
     @SpaceColumn(name = "nome", length = 256)
     private String nome;
-    @SpaceColumn(name = "endereco", length = 512)
-    private String endereco;
+
+    @SpaceColumn(name = "logradouro", length = 512)
+    private String logradouro;
+
+    @SpaceColumn(name = "bairro", length = 512)
+    private String bairro;
+
+    @SpaceColumn(name = "cidade", length = 512)
+    private String cidade;
+
+    @SpaceColumn(name = "estado", length = 512)
+    private String estado;
 
     public Pessoa() {
         codigo = ID.getId();
     }
 
-    public Pessoa(String nome, String endereco) {
+    public Pessoa(String nome) {
         this();
         this.nome = nome;
-        this.endereco = endereco;
     }
 
-    public Pessoa(int codigo, String nome) {
+    public Pessoa(String nome, String logradouro, String bairro, String cidade, String estado) {
+        this(nome);
+        this.logradouro = logradouro;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+    }
 
-        this.codigo = codigo;
+    public void set(String nome, String logradouro, String bairro, String cidade, String estado) {
         this.nome = nome;
+        this.logradouro = logradouro;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
     }
 
     public int getCodigo() {
@@ -59,24 +80,40 @@ public class Pessoa implements Serializable, IPersistent {
     }
 
     public String getEndereco() {
-        return endereco;
+        return logradouro + ", " + bairro
+                + " - " + cidade + ", " + estado;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public static List<Pessoa> recuperarTodas() {
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
 
-        /*List<Pessoa> pessoas = new ArrayList<>();
+    public String getBairro() {
+        return bairro;
+    }
 
-        for (int i = 0; i < 100; i++) {
-            pessoas.add(new Pessoa("Pessoa " + i, "Rua " + i));
-        }
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
 
-        return pessoas;*/
+    public String getCidade() {
+        return cidade;
+    }
 
-        return  BD.getDao().list(Pessoa.class);
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     @Override
@@ -98,7 +135,19 @@ public class Pessoa implements Serializable, IPersistent {
         return super.clone();
     }
 
+    public static List<Pessoa> recuperarTodas() {
+        return BD.getDao().list(Pessoa.class);
+    }
+
+    public static Pessoa recupear(int pessoaCodigo) {
+        return BD.getDao().uniqueResult(Pessoa.class, "codigo = ?", new String[]{Integer.toString(pessoaCodigo)});
+    }
+
     public boolean salvar() {
         return BD.getDao().insert(this) > 0;
+    }
+
+    public boolean atualizar() {
+        return BD.getDao().update(this) > 0;
     }
 }

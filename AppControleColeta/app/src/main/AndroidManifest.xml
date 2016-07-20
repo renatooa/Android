@@ -21,7 +21,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ColetaActivity" />
-        <activity android:name=".PessoaCadastro"></activity>
+        <activity android:name=".PessoaCadastro" />
+        <activity android:name=".ProdutoList" />
+        <activity android:name=".ProdutoCadastro" />
+        <activity android:name=".PessoaList"></activity>
     </application>
 
 </manifest>
