@@ -42,9 +42,7 @@ public class ColetaActivity extends AppCompatActivity {
 
         pessoa = (Pessoa) getIntent().getExtras().getSerializable(PessoaList.PARAM_PESSOA);
 
-        setTitle(getString(R.string.titulo_emprestimo) + pessoa.getNome());
-
-        Toast.makeText(this, pessoa.getNome(), Toast.LENGTH_LONG).show();
+        setTitle(getString(R.string.titulo_emprestimo) +" " + pessoa.getNome());
     }
 
     @Override

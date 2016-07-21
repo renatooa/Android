@@ -50,7 +50,7 @@ public class AdapterEmprestimo extends ArrayAdapter<QuantidadeControlada> {
 
     public class ViewHolder {
 
-        private View viewCor = null;
+        private TextView diaDevolucao = null;
         private TextView textNome = null;
         private TextView textProduto = null;
         private TextView textDataDevolucao = null;
@@ -60,7 +60,7 @@ public class AdapterEmprestimo extends ArrayAdapter<QuantidadeControlada> {
 
             Calendar c = Calendar.getInstance();
 
-            viewCor = view.findViewById(R.id.adp_emprestimo_cor);
+            diaDevolucao = (TextView) view.findViewById(R.id.adp_emprestimo_dia_devolucao);
             textNome = (TextView) view.findViewById(R.id.adp_emprestimo_nome);
             textProduto = (TextView) view.findViewById(R.id.adp_emprestimo_produto);
             textDataDevolucao = (TextView) view.findViewById(R.id.adp_emprestimo_devolucao);
@@ -68,14 +68,15 @@ public class AdapterEmprestimo extends ArrayAdapter<QuantidadeControlada> {
 
         public void popular(QuantidadeControlada quantidadeControlada) {
 
-            int corDevolucao = quantidadeControlada.isDevolucaoHoje()? Color.YELLOW:Color.GREEN;
-            corDevolucao = quantidadeControlada.isDevolucaoPrazoOK()? corDevolucao:Color.RED;
+            int resourceDevolucao = quantidadeControlada.isDevolucaoHoje() ? R.drawable.circular_textview_orange : R.drawable.circular_textview_green;
+            resourceDevolucao = quantidadeControlada.isDevolucaoPrazoOK() ? resourceDevolucao : R.drawable.circular_textview_red;
 
-            viewCor.setBackgroundColor(corDevolucao);
-
+            diaDevolucao.setBackgroundResource(resourceDevolucao);
+            String dataDevolucao = Conversao.formatarDataDDMMAAAA(quantidadeControlada.getDateDevolucao());
+            diaDevolucao.setText(dataDevolucao.substring(0, 2));
             textNome.setText(quantidadeControlada.getPessoa().getNome());
-            textProduto.setText(quantidadeControlada.getProduto().getNome());
-            textDataDevolucao.setText(Conversao.formatarDataDDMMAAAA(quantidadeControlada.getDateDevolucao()));
+            textProduto.setText(Conversao.formatarValor2(quantidadeControlada.getQuantidade()) +" - "+  quantidadeControlada.getProduto().getNome());
+            textDataDevolucao.setText(dataDevolucao);
         }
     }
 }

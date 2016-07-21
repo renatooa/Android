@@ -15,7 +15,12 @@
 
     <string name="titulo.dialogo">Escolha</string>
     <string name="titulo.atencao">Atenção</string>
-    <string name="titulo.emprestimo">Empréstimo</string>
+    <string name="titulo.emprestimos">Empréstimos</string>
+    <string name="titulo.emprestimo">Empréstimo para</string>
+    <string name="titulo_pessoas">Pessoas</string>
+    <string name="titulo_produtos">Produtos</string>
+    <string name="titulo_selecione_pessoa">Selecione uma Pessoa</string>
+
 
     <string name="texto.nome">Nome</string>
 

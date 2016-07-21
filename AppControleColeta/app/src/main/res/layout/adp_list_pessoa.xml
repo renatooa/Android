@@ -11,19 +11,28 @@
         android:layout_marginBottom="@dimen/padding_padrao">
 
         <LinearLayout
+            android:layout_marginTop="@dimen/padding_padrao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
-            <View
-                android:layout_width="3dp"
+            <TextView
+                android:id="@+id/adp_pessoa_letra"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="@dimen/padding_padrao"
+                android:background="@drawable/circular_textview"
+                android:fontFamily="sans-serif-thin"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textColor="#FFF"
+                android:textSize="20sp" />
 
-                android:background="@color/colorPrimary"
-                android:layout_height="match_parent"/>
-
-            <LinearLayout android:paddingLeft="@dimen/padding_padrao"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="9"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:orientation="vertical">
 
                 <TextView
@@ -40,6 +49,16 @@
                     android:maxLines="3"
                     android:text="End" />
             </LinearLayout>
+
+            <Button
+                android:layout_marginLeft="@dimen/padding_padrao"
+                android:layout_marginRight="@dimen/padding_padrao"
+                android:id="@+id/adp_pessoa_edit"
+                android:layout_width="0dp"
+                android:background="@android:drawable/ic_menu_edit"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                />
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

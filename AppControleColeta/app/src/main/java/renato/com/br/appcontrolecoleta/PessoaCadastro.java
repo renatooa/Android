@@ -25,6 +25,7 @@ public class PessoaCadastro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pessoa_cadastro);
+        setTitle(getString(R.string.navigation_drawer_pessoa));
 
         editNome = (EditText) findViewById(R.id.cad_pessoa_nome);
         editLogradouro = (EditText) findViewById(R.id.cad_pessoa_Logradouro);

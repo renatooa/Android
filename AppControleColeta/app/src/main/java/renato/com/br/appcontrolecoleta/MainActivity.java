@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.activity_main);
+        setTitle(getString(R.string.titulo_emprestimos));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -46,7 +47,14 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, PessoaCadastro.class);
+                Bundle bundle = new Bundle();
+
+                bundle.putString(PessoaList.PARAM_SELECIONAE_PESSOA,PessoaList.PARAM_SELECIONAE_PESSOA);
+
+                Intent intent = new Intent(MainActivity.this, PessoaList.class);
+
+                intent.putExtras(bundle);
+
                 startActivity(intent);
             }
         });

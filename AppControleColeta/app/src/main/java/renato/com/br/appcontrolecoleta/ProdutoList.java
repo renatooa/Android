@@ -34,8 +34,8 @@ public class ProdutoList extends AppCompatActivity implements  ListView.OnItemCl
         });
 
         listView = (ListView) findViewById(R.id.list_produto);
-
         listView.setOnItemClickListener(this);
+        setTitle(getString(R.string.titulo_produtos));
     }
 
     @Override

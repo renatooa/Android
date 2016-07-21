@@ -20,7 +20,10 @@ public class ProdutoCadastro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produto_cadastro);
 
+        setTitle(getString(R.string.navigation_drawer_produto));
         editTextNome = (EditText) findViewById(R.id.cad_produto_nome);
+
+
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(ProdutoList.PARAM_PRODUTO)) {
             produtoEdicao = (Produto) getIntent().getExtras().getSerializable(ProdutoList.PARAM_PRODUTO);

@@ -12,11 +12,15 @@ import java.util.List;
 
 import renato.com.br.appcontrolecoleta.adapter.AdapterPessoa;
 import renato.com.br.appcontrolecoleta.modelo.Pessoa;
+import renato.com.br.appcontrolecoleta.modelo.Produto;
 
-public class PessoaList extends AppCompatActivity implements ListView.OnItemClickListener, ListView.OnItemLongClickListener {
+public class PessoaList extends AppCompatActivity implements ListView.OnItemClickListener {
 
     public final static String PARAM_PESSOA = "PESSOA";
+    public final static String PARAM_SELECIONAE_PESSOA = "PARAM_SELECIONAE_PESSOA";
+
     private ListView listView = null;
+    private boolean selecionarPessoaEmprestimo = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,21 +36,18 @@ public class PessoaList extends AppCompatActivity implements ListView.OnItemClic
             }
         });
 
+        selecionarPessoaEmprestimo = (getIntent().getExtras() != null && getIntent().getExtras().containsKey(PARAM_SELECIONAE_PESSOA));
+
         listView = (ListView) findViewById(R.id.main_lista_pessoa);
-
         listView.setOnItemClickListener(this);
-        listView.setOnItemLongClickListener(this);
-
-        List<Pessoa> pessoas = Pessoa.recuperarTodas();
-
-        listView.setAdapter(new AdapterPessoa(this, pessoas));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        listView.setAdapter(new AdapterPessoa(this, Pessoa.recuperarTodas()));
+        setTitle(selecionarPessoaEmprestimo?getString(R.string.titulo_selecione_pessoa):getString(R.string.titulo_pessoas));
+        listView.setAdapter(new AdapterPessoa(this, Pessoa.recuperarTodas(), !selecionarPessoaEmprestimo));
     }
 
     @Override
@@ -58,17 +59,7 @@ public class PessoaList extends AppCompatActivity implements ListView.OnItemClic
         startActivity(intent);
     }
 
-    @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, PessoaCadastro.class);
-        intent.putExtras(getBundlParametroPessoa(position));
-
-        startActivity(intent);
-
-        return false;
-    }
-
-    private Bundle getBundlParametroPessoa( int position) {
+    private Bundle getBundlParametroPessoa(int position) {
 
         Pessoa pessoa = (Pessoa) listView.getAdapter().getItem(position);
 

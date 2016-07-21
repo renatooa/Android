@@ -15,11 +15,19 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <View
-                android:id="@+id/adp_emprestimo_cor"
-                android:layout_width="3dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorPrimary" />
+            <TextView
+                android:id="@+id/adp_emprestimo_dia_devolucao"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/padding_padrao"
+                android:background="@drawable/circular_textview"
+                android:fontFamily="sans-serif-thin"
+                android:gravity="center"
+                android:text="01"
+                android:textAllCaps="true"
+                android:textColor="#FFF"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -32,9 +40,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/texto.nome"
-                    android:textStyle="bold"
                     android:maxLines="2"
-                    style="@style/Base.TextAppearance.AppCompat.Title" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/adp_emprestimo_produto"
