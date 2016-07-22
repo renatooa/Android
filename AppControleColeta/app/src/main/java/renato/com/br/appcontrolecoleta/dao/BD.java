@@ -17,7 +17,7 @@ import renato.com.br.appcontrolecoleta.util.Arquivo;
 public class BD extends DataBaseSQLite {
 
     private static BD instance = null;
-    private static final int versao = 1;
+    private static final int versao = 2;
     private GenericDAO<IPersistent> dao = null;
 
     private BD() {

@@ -12,6 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -20,11 +21,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ColetaActivity" />
-        <activity android:name=".PessoaCadastro" />
-        <activity android:name=".ProdutoList" />
-        <activity android:name=".ProdutoCadastro" />
-        <activity android:name=".PessoaList"></activity>
+        <activity
+            android:name=".ColetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PessoaCadastro"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name=".ProdutoList"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name=".ProdutoCadastro"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name=".PessoaList"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
     </application>
 
 </manifest>

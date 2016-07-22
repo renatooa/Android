@@ -17,7 +17,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/adp_pessoa_letra"
+                android:id="@+id/adp_produto_letra"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="@dimen/padding_padrao"
@@ -36,22 +36,15 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/adp_pessoa_nome"
+                    android:id="@+id/adp_produto_nome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="2"
                     android:text="Nome" />
-
-                <TextView
-                    android:id="@+id/adp_pessoa_end"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3"
-                    android:text="End" />
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/adp_pessoa_img_edit"
+                android:id="@+id/adp_produto_img_edit"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" android:src="@android:drawable/ic_menu_edit" />

@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -54,6 +55,7 @@ public class AdapterEmprestimo extends ArrayAdapter<QuantidadeControlada> {
         private TextView textNome = null;
         private TextView textProduto = null;
         private TextView textDataDevolucao = null;
+        private ImageView imageView = null;
 
 
         public ViewHolder(View view) {
@@ -64,19 +66,29 @@ public class AdapterEmprestimo extends ArrayAdapter<QuantidadeControlada> {
             textNome = (TextView) view.findViewById(R.id.adp_emprestimo_nome);
             textProduto = (TextView) view.findViewById(R.id.adp_emprestimo_produto);
             textDataDevolucao = (TextView) view.findViewById(R.id.adp_emprestimo_devolucao);
+            imageView = (ImageView) view.findViewById(R.id.adp_emprestimo_img);
         }
 
         public void popular(QuantidadeControlada quantidadeControlada) {
 
-            int resourceDevolucao = quantidadeControlada.isDevolucaoHoje() ? R.drawable.circular_textview_orange : R.drawable.circular_textview_green;
-            resourceDevolucao = quantidadeControlada.isDevolucaoPrazoOK() ? resourceDevolucao : R.drawable.circular_textview_red;
-
-            diaDevolucao.setBackgroundResource(resourceDevolucao);
             String dataDevolucao = Conversao.formatarDataDDMMAAAA(quantidadeControlada.getDateDevolucao());
-            diaDevolucao.setText(dataDevolucao.substring(0, 2));
+
             textNome.setText(quantidadeControlada.getPessoa().getNome());
-            textProduto.setText(Conversao.formatarValor2(quantidadeControlada.getQuantidade()) +" - "+  quantidadeControlada.getProduto().getNome());
+            textProduto.setText(Conversao.formatarValor2(quantidadeControlada.getQuantidade()) + " - " + quantidadeControlada.getProduto().getNome());
             textDataDevolucao.setText(dataDevolucao);
+
+            if (quantidadeControlada.isDevolvido()) {
+                imageView.setImageResource(android.R.drawable.presence_online);
+                diaDevolucao.setBackgroundResource(R.drawable.circular_textview);
+                diaDevolucao.setText(getContext().getString(R.string.texto_ok));
+
+            } else {
+                int resourceDevolucao = quantidadeControlada.isDevolucaoHoje() ? R.drawable.circular_textview_orange : R.drawable.circular_textview_green;
+                resourceDevolucao = quantidadeControlada.isDevolucaoPrazoOK() ? resourceDevolucao : R.drawable.circular_textview_red;
+
+                diaDevolucao.setBackgroundResource(resourceDevolucao);
+                diaDevolucao.setText(dataDevolucao.substring(0, 2));
+            }
         }
     }
 }

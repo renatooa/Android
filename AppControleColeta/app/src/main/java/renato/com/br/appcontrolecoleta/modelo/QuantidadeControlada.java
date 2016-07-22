@@ -54,6 +54,9 @@ public class QuantidadeControlada implements Serializable, IPersistent {
     @SpaceColumn(name = "dateDevolucaoMillis")
     private long dateDevolucaoMillis = 0;
 
+    @SpaceColumn(name = "flagDevolvido")
+    private int flagDevolvido = 0;
+
     public QuantidadeControlada() {
         codigo = ID.getId();
     }
@@ -124,7 +127,7 @@ public class QuantidadeControlada implements Serializable, IPersistent {
     }
 
     public Date getDate() {
-        if (date == null){
+        if (date == null) {
             date = new Date(dateMillis);
         }
         return date;
@@ -151,7 +154,7 @@ public class QuantidadeControlada implements Serializable, IPersistent {
     }
 
     public Date getDateDevolucao() {
-        if (dateDevolucao == null){
+        if (dateDevolucao == null) {
             dateDevolucao = new Date(dateDevolucaoMillis);
         }
         return dateDevolucao;
@@ -183,6 +186,22 @@ public class QuantidadeControlada implements Serializable, IPersistent {
         return Conversao.formatarDataDDMMAAAA(getDateDevolucao()).equals(Conversao.formatarDataDDMMAAAA(new Date()));
     }
 
+    public void setDevolvido(boolean devolvido) {
+        this.flagDevolvido = devolvido ? 1 : 0;
+    }
+
+    public boolean isDevolvido() {
+        return getFlagDevolvido() == 1;
+    }
+
+    public int getFlagDevolvido() {
+        return flagDevolvido;
+    }
+
+    public void setFlagDevolvido(int flagDevolvido) {
+        this.flagDevolvido = flagDevolvido;
+    }
+
     @Override
     public Table getTable() {
         return null;
@@ -198,7 +217,15 @@ public class QuantidadeControlada implements Serializable, IPersistent {
     }
 
     public static List<QuantidadeControlada> recuperarTodas() {
-        return BD.getDao().list(QuantidadeControlada.class);
+        return BD.getDao().list(QuantidadeControlada.class, null, null, "flagDevolvido, dateDevolucaoMillis",null);
+    }
+
+    public boolean excluir() {
+        return BD.getDao().delete(this) > 0;
+    }
+
+    public boolean atualizar() {
+        return BD.getDao().update(this) > 0;
     }
 
     public boolean salvar() {

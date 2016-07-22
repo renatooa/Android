@@ -73,7 +73,7 @@ public class Produto implements Serializable, IPersistent {
     }
 
     public static List<Produto> recuperarTodos() {
-        return BD.getDao().list(Produto.class);
+        return BD.getDao().list(Produto.class, null, null, "nome",null);
     }
 
     public static Produto recupear(int produtoCodigo) {

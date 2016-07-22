@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +27,9 @@ import static renato.com.br.appcontrolecoleta.R.drawable.*;
  */
 public class AdapterPessoa extends ArrayAdapter<Pessoa> {
 
-   private boolean exibeEdicao = false;
+    private boolean exibeEdicao = false;
 
-    public AdapterPessoa(Context context, List<Pessoa> pessoas,boolean exibeEdicao) {
+    public AdapterPessoa(Context context, List<Pessoa> pessoas, boolean exibeEdicao) {
         super(context, R.layout.adp_list_pessoa, pessoas);
         this.exibeEdicao = exibeEdicao;
     }
@@ -49,44 +50,32 @@ public class AdapterPessoa extends ArrayAdapter<Pessoa> {
             vh = (ViewHolder) view.getTag();
         }
 
-       final Pessoa pessoa = getItem(position);
+        final Pessoa pessoa = getItem(position);
 
         vh.textNome.setText(pessoa.getNome());
         vh.textNomeLetra.setText(pessoa.getNome().substring(0, 1));
         vh.textEndereco.setText(pessoa.getEndereco());
 
 
-        if (exibeEdicao) {
-            vh.button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(PessoaList.PARAM_PESSOA, pessoa);
-                    Intent intent = new Intent(getContext(), PessoaCadastro.class);
-                    intent.putExtras(bundle);
-                    getContext().startActivity(intent);
-                }
-            });
-        }else{
-            vh.button.setVisibility(View.GONE);
+        if (!exibeEdicao) {
+            vh.imageEdit.setVisibility(View.GONE);
         }
 
         return view;
     }
 
     public class ViewHolder {
-        TextView textNome = null;
-        TextView textNomeLetra = null;
-        TextView textEndereco = null;
-        Button button = null;
+        protected TextView textNome = null;
+        protected TextView textNomeLetra = null;
+        protected TextView textEndereco = null;
+        protected ImageView imageEdit = null;
 
         public ViewHolder(View view) {
 
             textNome = (TextView) view.findViewById(R.id.adp_pessoa_nome);
             textNomeLetra = (TextView) view.findViewById(R.id.adp_pessoa_letra);
             textEndereco = (TextView) view.findViewById(R.id.adp_pessoa_end);
-            button = (Button) (Button) view.findViewById(R.id.adp_pessoa_edit);
-
+            imageEdit = (ImageView) view.findViewById(R.id.adp_pessoa_img_edit);
         }
     }
 }

@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import java.util.ListIterator;
 
+import renato.com.br.appcontrolecoleta.adapter.AdapterProduto;
 import renato.com.br.appcontrolecoleta.modelo.Pessoa;
 import renato.com.br.appcontrolecoleta.modelo.Produto;
 
@@ -41,7 +42,7 @@ public class ProdutoList extends AppCompatActivity implements  ListView.OnItemCl
     @Override
     protected void onResume() {
         super.onResume();
-        ArrayAdapter<Produto> adp = new ArrayAdapter<Produto>(this, android.R.layout.simple_list_item_1, Produto.recuperarTodos());
+        ArrayAdapter<Produto> adp = new AdapterProduto(this, Produto.recuperarTodos());
         listView.setAdapter(adp);
     }
 

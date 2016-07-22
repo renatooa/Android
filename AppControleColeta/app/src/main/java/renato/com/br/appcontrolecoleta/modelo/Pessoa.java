@@ -135,8 +135,9 @@ public class Pessoa implements Serializable, IPersistent {
         return super.clone();
     }
 
-    public static List<Pessoa> recuperarTodas() {
-        return BD.getDao().list(Pessoa.class);
+    public static List<Pessoa> recuperarTodas()
+    {
+        return BD.getDao().list(Pessoa.class, null, null, "nome",null);
     }
 
     public static Pessoa recupear(int pessoaCodigo) {

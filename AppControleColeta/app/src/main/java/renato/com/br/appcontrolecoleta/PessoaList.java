@@ -46,16 +46,22 @@ public class PessoaList extends AppCompatActivity implements ListView.OnItemClic
     protected void onResume() {
         super.onResume();
 
-        setTitle(selecionarPessoaEmprestimo?getString(R.string.titulo_selecione_pessoa):getString(R.string.titulo_pessoas));
+        setTitle(selecionarPessoaEmprestimo ? getString(R.string.titulo_selecione_pessoa) : getString(R.string.titulo_pessoas));
         listView.setAdapter(new AdapterPessoa(this, Pessoa.recuperarTodas(), !selecionarPessoaEmprestimo));
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Intent intent = new Intent(this, ColetaActivity.class);
-        intent.putExtras(getBundlParametroPessoa(position));
+        Intent intent = null;
 
+        if (selecionarPessoaEmprestimo) {
+            intent = new Intent(this, ColetaActivity.class);
+        } else {
+            intent = new Intent(this, PessoaCadastro.class);
+        }
+
+        intent.putExtras(getBundlParametroPessoa(position));
         startActivity(intent);
     }
 

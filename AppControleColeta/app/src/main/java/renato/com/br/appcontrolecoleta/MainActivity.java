@@ -1,10 +1,12 @@
 package renato.com.br.appcontrolecoleta;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +31,9 @@ import renato.com.br.appcontrolecoleta.modelo.Produto;
 import renato.com.br.appcontrolecoleta.modelo.QuantidadeControlada;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ListView.OnItemClickListener {
+
+    public final static String PARAM_COLETA = "PARAM_COLETA";
 
     public static Context context = null;
 
@@ -49,7 +54,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
 
-                bundle.putString(PessoaList.PARAM_SELECIONAE_PESSOA,PessoaList.PARAM_SELECIONAE_PESSOA);
+                bundle.putString(PessoaList.PARAM_SELECIONAE_PESSOA, PessoaList.PARAM_SELECIONAE_PESSOA);
 
                 Intent intent = new Intent(MainActivity.this, PessoaList.class);
 
@@ -69,11 +74,16 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         listViewEmprestimos = (ListView) findViewById(R.id.list_emprestimos);
+        listViewEmprestimos.setOnItemClickListener(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        popularListView();
+    }
+
+    private void popularListView() {
         listViewEmprestimos.setAdapter(new AdapterEmprestimo(this, QuantidadeControlada.recuperarTodas()));
     }
 
@@ -115,5 +125,48 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+        final QuantidadeControlada quantidadeControlada = (QuantidadeControlada) listViewEmprestimos.getAdapter().getItem(position);
+
+        if (!quantidadeControlada.isDevolvido()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.title_deseja_fazer)
+                    .setItems(R.array.opcoes_emprestimo, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            switch (which) {
+                                case 0: // Devolver
+
+                                    quantidadeControlada.setDevolvido(true);
+                                    boolean sucessoDevolucao = quantidadeControlada.atualizar();
+                                    if (sucessoDevolucao) {
+                                        Toast.makeText(MainActivity.this, getString(R.string.mensagem_devolvido_sucesso), Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(MainActivity.this, getString(R.string.alerta_falha), Toast.LENGTH_LONG).show();
+                                    }
+
+                                    break;
+                                case 1: // Excluir
+
+                                    boolean sucesso = quantidadeControlada.excluir();
+                                    if (sucesso) {
+                                        Toast.makeText(MainActivity.this, getString(R.string.mensagem_excluido_sucesso), Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(MainActivity.this, getString(R.string.alerta_falha), Toast.LENGTH_LONG).show();
+                                    }
+
+                                    break;
+                            }
+                            popularListView();
+                        }
+                    });
+            builder.show();
+        }else{
+            Toast.makeText(MainActivity.this, getString(R.string.mensagem_ja_devolvido), Toast.LENGTH_LONG).show();
+        }
     }
 }

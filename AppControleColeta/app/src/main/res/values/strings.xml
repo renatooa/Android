@@ -29,6 +29,7 @@
     <string name="texto.cidade">Cidade</string>
     <string name="texto.estado">Estado</string>
 
+    <string name="texto_ok">OK</string>
     <string name="texto.sim">Sim</string>
     <string name="texto.nao">Não</string>
 
@@ -37,7 +38,18 @@
     <string name="texto_data_devolucao">Data Devolução</string>
 
     <string name="mensagem_gravado_sucesso">Gravado com sucesso</string>
-    <string name="alerta_falha_gravacao">Falha na Gravacao</string>
+    <string name="mensagem_ja_devolvido">Emprestimo devolvido! Deixe o histórico ;)</string>
+    <string name="mensagem_excluido_sucesso">Excluido com sucesso</string>
+    <string name="mensagem_devolvido_sucesso">Devolvido com sucesso</string>
+    <string name="alerta_falha_gravacao">Ops! Falha na Gravacao</string>
+    <string name="alerta_falha">Ops! Falhou</string>
     <string name="title_activity_pessoa_cadastro">PessoaCadastro</string>
+
+    <string name="title_deseja_fazer">O que deseja fazer?</string>
+
+    <array name="opcoes_emprestimo">
+        <item>Devolver</item>
+        <item>Excluir</item>
+    </array>
 
 </resources>

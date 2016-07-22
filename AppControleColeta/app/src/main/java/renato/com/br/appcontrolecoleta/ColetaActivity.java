@@ -39,10 +39,10 @@ public class ColetaActivity extends AppCompatActivity {
         ArrayAdapter<Produto> arrayAdapterProduto = Fabrica.getInstancia().criarArrayAdapterCombo(this, Produto.recuperarTodos());
 
         spinnerProduto.setAdapter(arrayAdapterProduto);
-
         pessoa = (Pessoa) getIntent().getExtras().getSerializable(PessoaList.PARAM_PESSOA);
 
-        setTitle(getString(R.string.titulo_emprestimo) +" " + pessoa.getNome());
+
+        setTitle(getString(R.string.titulo_emprestimo) + " " + pessoa.getNome());
     }
 
     @Override
