@@ -3,6 +3,7 @@
     package="renato.com.br.appcontrolecoleta">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -37,6 +38,21 @@
         <activity
             android:name=".PessoaList"
             android:configChanges="keyboardHidden|orientation|screenSize" />
+
+        <service
+            android:name=".service.VerificadorDevolucaoService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".receiver.BootCompletoReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+
+        </receiver>
     </application>
 
 </manifest>

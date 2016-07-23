@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.space.api.core.sistema.Conversao;
+import br.com.space.api.core.util.StringUtil;
+import br.com.space.api.spa.android.model.dao.GenericDAO;
 import br.com.space.api.spa.annotations.SpaceColumn;
 import br.com.space.api.spa.annotations.SpaceId;
 import br.com.space.api.spa.annotations.SpaceTable;
@@ -217,7 +219,28 @@ public class QuantidadeControlada implements Serializable, IPersistent {
     }
 
     public static List<QuantidadeControlada> recuperarTodas() {
-        return BD.getDao().list(QuantidadeControlada.class, null, null, "flagDevolvido, dateDevolucaoMillis",null);
+        return BD.getDao().list(QuantidadeControlada.class, null, null, "flagDevolvido, dateDevolucaoMillis", null);
+    }
+
+    public static List<QuantidadeControlada> recupearHoje(GenericDAO<IPersistent> dao) {
+
+        Calendar iniCalendar = Calendar.getInstance();
+        iniCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        iniCalendar.set(Calendar.MINUTE, 0);
+        iniCalendar.set(Calendar.SECOND, 0);
+        iniCalendar.set(Calendar.MILLISECOND, 0);
+
+        Calendar fimCalendar = Calendar.getInstance();
+        iniCalendar.set(Calendar.HOUR_OF_DAY, 23);
+        iniCalendar.set(Calendar.MINUTE, 59);
+        iniCalendar.set(Calendar.SECOND, 59);
+        iniCalendar.set(Calendar.MILLISECOND, 59);
+
+        String where = "dateDevolucaoMillis >= ? and dateDevolucaoMillis <= ?";
+
+        String[] parametros = new String[]{Long.toString(iniCalendar.getTimeInMillis()), Long.toString(fimCalendar.getTimeInMillis())};
+
+        return dao.list(QuantidadeControlada.class, where, parametros, "flagDevolvido, dateDevolucaoMillis", null);
     }
 
     public boolean excluir() {

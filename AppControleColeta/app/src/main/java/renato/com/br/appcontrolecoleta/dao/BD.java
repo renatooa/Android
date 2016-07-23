@@ -25,6 +25,11 @@ public class BD extends DataBaseSQLite {
         dao = new GenericDAO<IPersistent>(this);
     }
 
+    private BD(Context context) {
+        super(context, Arquivo.getPastaRaiz().getAbsolutePath() + "/coletaDevolucao.db", versao, false);
+        dao = new GenericDAO<IPersistent>(this);
+    }
+
     @Override
     public void mapTables() {
         mapTable(Produto.class);
@@ -34,6 +39,10 @@ public class BD extends DataBaseSQLite {
 
     public static GenericDAO<IPersistent> getDao() {
         return getInstance().dao;
+    }
+
+    public static GenericDAO<IPersistent> getNewDao(Context context) {
+        return new BD(context).dao;
     }
 
     public static BD getInstance() {
