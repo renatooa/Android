@@ -1,16 +1,15 @@
 package renato.com.br.appcontrolecoleta.service;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Random;
@@ -47,10 +46,9 @@ public class VerificadorDevolucaoService extends Service {
 
         long delayInicial = 1;
         long periodo = 30;
-        TimeUnit unit = TimeUnit.SECONDS;
+        TimeUnit unit = TimeUnit.MINUTES;
 
         pool.scheduleAtFixedRate(new VerificadorDevolucao(), delayInicial, periodo, unit);
-
         return START_STICKY;
     }
 
@@ -66,26 +64,19 @@ public class VerificadorDevolucaoService extends Service {
         super.onDestroy();
     }
 
-    private void criarNotificacao(int quant) {
-        int icone = R.mipmap.ic_launcher;
-        String aviso = "Devoluções para Hoje :)";
-        long data = System.currentTimeMillis();
-
-        Random random = new Random();
-
-
-        int id = Math.abs(random.nextInt());
-
-        String titulo = "Para hoje são 2 devoluçoes clique para ver";
+    private void dispararNotificacao(List<QuantidadeControlada> quantidadeControladas) {
 
         Context context = getApplicationContext();
         Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        String aviso = getString(R.string.mensagem_notificacao_devolucao, Integer.toString(quantidadeControladas.size()));
+        String titulo = getString(R.string.titulo_notificacao_devolucao);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true)
-                .setSmallIcon(icone)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(titulo)
                 .setContentText(aviso)
                 .setContentIntent(pendingIntent);
@@ -95,20 +86,16 @@ public class VerificadorDevolucaoService extends Service {
         nm.notify(1, builder.build());
     }
 
-
     public class VerificadorDevolucao implements Runnable {
 
         @Override
         public void run() {
 
-            List<QuantidadeControlada> quantidadeControladas = QuantidadeControlada.recupearHoje(dao);
+            List<QuantidadeControlada> quantidadeControladas = QuantidadeControlada.recupearHojeNaoDevolvidas(dao);
 
             if (ListUtil.isValida(quantidadeControladas)) {
-
-
+                dispararNotificacao(quantidadeControladas);
             }
-
-            criarNotificacao(2);
         }
     }
 }

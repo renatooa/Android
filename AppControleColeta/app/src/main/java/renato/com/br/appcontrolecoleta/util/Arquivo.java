@@ -10,7 +10,7 @@ import java.io.File;
 public class Arquivo {
 
     public static final File PASTA_RAIZ = new File(getDiretorioExterno(),
-            "coleta");
+            "controle_emprestimo");
 
     public static File getPastaRaiz() {
         File raizApp = PASTA_RAIZ;

@@ -219,10 +219,10 @@ public class QuantidadeControlada implements Serializable, IPersistent {
     }
 
     public static List<QuantidadeControlada> recuperarTodas() {
-        return BD.getDao().list(QuantidadeControlada.class, null, null, "flagDevolvido, dateDevolucaoMillis", null);
+        return recupearHojeNaoDevolvidas(BD.getDao());//BD.getDao().list(QuantidadeControlada.class, null, null, "flagDevolvido, dateDevolucaoMillis", null);
     }
 
-    public static List<QuantidadeControlada> recupearHoje(GenericDAO<IPersistent> dao) {
+    public static List<QuantidadeControlada> recupearHojeNaoDevolvidas(GenericDAO<IPersistent> dao) {
 
         Calendar iniCalendar = Calendar.getInstance();
         iniCalendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -231,12 +231,12 @@ public class QuantidadeControlada implements Serializable, IPersistent {
         iniCalendar.set(Calendar.MILLISECOND, 0);
 
         Calendar fimCalendar = Calendar.getInstance();
-        iniCalendar.set(Calendar.HOUR_OF_DAY, 23);
-        iniCalendar.set(Calendar.MINUTE, 59);
-        iniCalendar.set(Calendar.SECOND, 59);
-        iniCalendar.set(Calendar.MILLISECOND, 59);
+        fimCalendar.set(Calendar.HOUR_OF_DAY, 23);
+        fimCalendar.set(Calendar.MINUTE, 59);
+        fimCalendar.set(Calendar.SECOND, 59);
+        fimCalendar.set(Calendar.MILLISECOND, 59);
 
-        String where = "dateDevolucaoMillis >= ? and dateDevolucaoMillis <= ?";
+        String where = "dateDevolucaoMillis >= ? and dateDevolucaoMillis <= ? and flagDevolvido = 0";
 
         String[] parametros = new String[]{Long.toString(iniCalendar.getTimeInMillis()), Long.toString(fimCalendar.getTimeInMillis())};
 

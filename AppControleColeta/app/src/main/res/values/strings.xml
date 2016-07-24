@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppControleColeta</string>
+    <string name="app_name">Controle Empréstimo</string>
 
     <string name="app_dev">Renato Alves</string>
 
@@ -20,6 +20,10 @@
     <string name="titulo_pessoas">Pessoas</string>
     <string name="titulo_produtos">Produtos</string>
     <string name="titulo_selecione_pessoa">Selecione uma Pessoa</string>
+
+    <string name="titulo_notificacao_devolucao">Devoluções previstas :)</string>
+    <string name="mensagem_notificacao_devolucao">São %1$s devoluções ;)</string>
+
 
 
     <string name="texto.nome">Nome</string>
@@ -48,7 +52,7 @@
     <string name="title_deseja_fazer">O que deseja fazer?</string>
 
     <array name="opcoes_emprestimo">
-        <item>Devolver</item>
+        <item>Receber</item>
         <item>Excluir</item>
     </array>
 

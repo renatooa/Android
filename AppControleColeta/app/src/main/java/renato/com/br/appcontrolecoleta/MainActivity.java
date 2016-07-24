@@ -36,9 +36,13 @@ public class MainActivity extends AppCompatActivity
 
     public final static String PARAM_COLETA = "PARAM_COLETA";
 
+    public final static String PARAM_LISTA_DEVOLUCAO = "PARAM_LISTA_DEVOLUCAO";
+
     public static Context context = null;
 
     public ListView listViewEmprestimos = null;
+
+    public ArrayList<QuantidadeControlada> devolucoes = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity
 
                 intent.putExtras(bundle);
 
+                devolucoes.clear();
                 startActivity(intent);
             }
         });
@@ -76,16 +81,33 @@ public class MainActivity extends AppCompatActivity
 
         listViewEmprestimos = (ListView) findViewById(R.id.list_emprestimos);
         listViewEmprestimos.setOnItemClickListener(this);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(PARAM_LISTA_DEVOLUCAO)) {
+            devolucoes = (ArrayList<QuantidadeControlada>) savedInstanceState.getSerializable(PARAM_LISTA_DEVOLUCAO);
+        } else {
+            devolucoes = new ArrayList<>(QuantidadeControlada.recuperarTodas());
+        }
+        listViewEmprestimos.setAdapter(new AdapterEmprestimo(this, devolucoes));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(PARAM_LISTA_DEVOLUCAO, devolucoes);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        popularListView();
+        if (devolucoes.size() == 0){
+            popularListView();
+        }
     }
 
     private void popularListView() {
-        listViewEmprestimos.setAdapter(new AdapterEmprestimo(this, QuantidadeControlada.recuperarTodas()));
+        devolucoes.clear();
+        devolucoes.addAll(QuantidadeControlada.recuperarTodas());
+        ((AdapterEmprestimo) listViewEmprestimos.getAdapter()).notifyDataSetChanged();
     }
 
     @Override
@@ -166,7 +188,7 @@ public class MainActivity extends AppCompatActivity
                         }
                     });
             builder.show();
-        }else{
+        } else {
             Toast.makeText(MainActivity.this, getString(R.string.mensagem_ja_devolvido), Toast.LENGTH_LONG).show();
         }
     }

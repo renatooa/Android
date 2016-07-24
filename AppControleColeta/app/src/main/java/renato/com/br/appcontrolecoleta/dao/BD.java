@@ -17,17 +17,38 @@ import renato.com.br.appcontrolecoleta.util.Arquivo;
 public class BD extends DataBaseSQLite {
 
     private static BD instance = null;
-    private static final int versao = 2;
+    private static final String NOME_DB = "/emprestimo.db";
+    private static final int versao = 1;
     private GenericDAO<IPersistent> dao = null;
 
-    private BD() {
-        super(MainActivity.context, Arquivo.getPastaRaiz().getAbsolutePath() + "/coletaDevolucao.db", versao, false);
+    private BD(Context context) {
+        super(context, Arquivo.getPastaRaiz().getAbsolutePath() + NOME_DB, versao, false);
         dao = new GenericDAO<IPersistent>(this);
+        verificarCriarDemostracao();
     }
 
-    private BD(Context context) {
-        super(context, Arquivo.getPastaRaiz().getAbsolutePath() + "/coletaDevolucao.db", versao, false);
-        dao = new GenericDAO<IPersistent>(this);
+    public void verificarCriarDemostracao() {
+        try {
+
+            int pessoas = dao.count(Pessoa.class);
+
+            beginTransaction();
+            if (pessoas == 0) {
+                dao.insert(new Pessoa("Artur Mol", "Rua Claudio Manoel, 1205", "Savassi", "BH", "MG"));
+                dao.insert(new Pessoa("Renato Alves", "Rua Sl, 10", "Kennedy", "Santa Luzia", "MG"));
+            }
+
+            int produtos = dao.count(Produto.class);
+
+            if (produtos == 0) {
+                dao.insert(new Produto("Dominando o Android: Do Básico ao Avançado"));
+                dao.insert(new Produto("Google Android"));
+                dao.insert(new Produto("Desenvolvimento de Aplicativos Android para Leigos"));
+            }
+            endTransaction();
+        } catch (Exception e) {
+            rollBackTransaction();
+        }
     }
 
     @Override
@@ -47,7 +68,7 @@ public class BD extends DataBaseSQLite {
 
     public static BD getInstance() {
         if (instance == null) {
-            instance = new BD();
+            instance = new BD(MainActivity.context);
         }
         return instance;
     }
